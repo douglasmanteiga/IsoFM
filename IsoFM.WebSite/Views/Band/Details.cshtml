@@ -1,0 +1,67 @@
+﻿@model IsoFM.WebSite.Models.BandViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<br />
+
+<center><h2>Details Band</h2></center>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            <img src="@Html.DisplayFor(model =>model.Image)" style="height:200px;width:200px;" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Biography)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Biography)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumPlays)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumPlays)
+        </dd>
+
+    </dl>
+</div>
+
+<center><h2>Albums</h2></center>
+
+@*@Html.Partial("DetailsAlbum");*@
+@Html.Action("DetailsAlbum", new { idBand = this.Model.Id });
+
+
+
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+</p>

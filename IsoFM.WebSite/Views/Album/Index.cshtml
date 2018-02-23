@@ -1,0 +1,61 @@
+﻿@model IEnumerable<IsoFM.WebSite.Models.AlbumViewModel>
+
+@{
+    ViewBag.Title = "Bands";
+}
+
+<br />
+<center><h2>Bands</h2></center>
+
+<table id="tableGeral" class="table table-striped" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleasedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleasedDate)
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem =>item.Image)" style="height:200px;width:200px;" />
+                    @*@Html.DisplayFor(modelItem => item.Image)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleasedDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", "Band", new { id = item.Band }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
