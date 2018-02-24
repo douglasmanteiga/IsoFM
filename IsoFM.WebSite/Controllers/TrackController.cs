@@ -15,8 +15,8 @@ namespace IsoFM.WebSite.Controllers
     {
         BandRepository _bandRepository = new BandRepository();
         // GET: Track
-        [OutputCache(Duration = 600, VaryByParam = "idAlbum")]
-        public ActionResult DetailsAlbum(string idBand, string idAlbum)
+        [OutputCache(Duration = 600, VaryByParam = "*")]
+        public ActionResult Details(string idBand, string idAlbum)
         {
 
             if (idBand == null || string.IsNullOrEmpty(idBand) == true || idAlbum == null || string.IsNullOrEmpty(idAlbum) == true)
@@ -26,15 +26,26 @@ namespace IsoFM.WebSite.Controllers
 
             var bandFull = _bandRepository.ObterFull();
             var albumDetais = bandFull.Where(b => b.Id == idBand).FirstOrDefault().AlbumList;
-            var album = albumDetais.FirstOrDefault().Where(a => a.Id == idAlbum);
 
-            var tracksDetais = albumDetais.FirstOrDefault().Where(t => t.Id == idAlbum).FirstOrDefault().Tracks;
+            //Não consegue encontrar o album...>
+            //var album = from Album p in albumDetais where p.Id == idBand select p;
+            //var album = albumDetais.First().Where(a => a.Id == idAlbum);
+
+            var album = new Album();
+            foreach (var item in albumDetais)
+            {
+                if (item[0].Id == idAlbum)
+                {
+                    album = item[0];
+                    break;
+                }
+            }
 
             List<Track> listaTrack = new List<Track>();
 
-            foreach (var item in tracksDetais)
+            if (string.IsNullOrEmpty(album.Id) == false)
             {
-                listaTrack.Add(item);
+                listaTrack = album.Tracks.ToList<Track>();
             }
 
             var viewModel = Mapper.Map<List<Track>, List<TrackViewModel>>(listaTrack);

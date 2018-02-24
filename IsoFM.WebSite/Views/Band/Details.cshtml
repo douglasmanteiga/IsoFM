@@ -58,7 +58,7 @@
 <center><h2>Albums</h2></center>
 
 @*@Html.Partial("DetailsAlbum");*@
-@Html.Action("DetailsAlbum", new { idBand = this.Model.Id });
+@Html.Action("Details", "Album", new { idBand = this.Model.Id });
 
 
 

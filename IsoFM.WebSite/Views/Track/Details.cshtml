@@ -1,0 +1,35 @@
+﻿@model IEnumerable<IsoFM.WebSite.Models.TrackViewModel>
+
+@{
+    ViewBag.Title = "Detais";
+}
+
+<center><h2>Detais</h2></center>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Back to List", "Details", "Band", new { idBand = this.Model.First().Id }, new { @class = "btn btn-primary" })
+</p>

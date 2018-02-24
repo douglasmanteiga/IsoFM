@@ -42,30 +42,5 @@ namespace IsoFM.WebSite.Controllers
 
             return View(viewModel);
         }
-
-        [OutputCache(Duration = 600, VaryByParam = "idBand")]
-        public ActionResult DetailsAlbum(string idBand)
-        {
-            if (idBand == null || string.IsNullOrEmpty(idBand) == true)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var bandFull = _bandRepository.ObterFull();
-
-            var albumDetais = bandFull.Where(b => b.Id == idBand).FirstOrDefault().AlbumList;
-
-
-            List<Album> listaAlbum = new List<Album>();
-
-            foreach (var item in albumDetais)
-            {
-                listaAlbum.Add(item.FirstOrDefault());
-            }
-
-            var viewModel = Mapper.Map<List<Album>, List<AlbumViewModel>>(listaAlbum);
-
-            return PartialView(viewModel);
-        }
     }
 }

@@ -176,8 +176,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Band\DetailsAlbum.cshtml" />
-    <Content Include="Views\Track\DetailsTracks.cshtml" />
+    <Content Include="Views\Album\Details.cshtml" />
+    <Content Include="Views\Track\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

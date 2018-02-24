@@ -5,6 +5,7 @@ using IsoFM.WebSite.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,6 +14,7 @@ namespace IsoFM.WebSite.Controllers
     public class AlbumController : Controller
     {
         AlbumRepository _albumRepository = new AlbumRepository();
+        BandRepository _bandRepository = new BandRepository();
         // GET: Album
         [OutputCache(Duration = 600, VaryByParam = "none")]
         public ActionResult Index()
@@ -21,7 +23,30 @@ namespace IsoFM.WebSite.Controllers
 
             return View(viewModel);
         }
-        
-        //Não implementei a busca por ID porque não existe na API
+
+        [OutputCache(Duration = 600, VaryByParam = "idBand")]
+        public ActionResult Details(string idBand)
+        {
+            if (idBand == null || string.IsNullOrEmpty(idBand) == true)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var bandFull = _bandRepository.ObterFull();
+
+            var albumDetais = bandFull.Where(b => b.Id == idBand).FirstOrDefault().AlbumList;
+
+            List<Album> listaAlbum = new List<Album>();
+
+            foreach (var item in albumDetais)
+            {
+                listaAlbum.Add(item.FirstOrDefault());
+            }
+
+            var viewModel = Mapper.Map<List<Album>, List<AlbumViewModel>>(listaAlbum);
+
+            return PartialView(viewModel);
+        }
+
     }
 }
