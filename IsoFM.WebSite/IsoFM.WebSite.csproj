@@ -164,6 +164,7 @@
     </Compile>
     <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\BandViewModel.cs" />
+    <Compile Include="Models\MeusAlbums.cs" />
     <Compile Include="Models\TrackViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

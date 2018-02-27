@@ -27,7 +27,7 @@
                 @Html.DisplayFor(modelItem => item.ReleasedDate)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "Track", new { idBand = item.Band, idAlbum = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", "Track", new { @id = item.Id }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }

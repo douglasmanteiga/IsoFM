@@ -14,43 +14,31 @@ namespace IsoFM.WebSite.Controllers
     public class TrackController : Controller
     {
         BandRepository _bandRepository = new BandRepository();
-        // GET: Track
         [OutputCache(Duration = 600, VaryByParam = "*")]
-        public ActionResult Details(string idBand, string idAlbum)
+        public ActionResult Details(string id) /*string idBand, string idAlbum*/
         {
 
-            if (idBand == null || string.IsNullOrEmpty(idBand) == true || idAlbum == null || string.IsNullOrEmpty(idAlbum) == true)
+            AlbumViewModel album = null;
+
+            foreach(BandViewModel banda in Discografia.BandCollection)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var bandFull = _bandRepository.ObterFull();
-            var albumDetais = bandFull.Where(b => b.Id == idBand).FirstOrDefault().AlbumList;
-
-            //Não consegue encontrar o album...>
-            //var album = from Album p in albumDetais where p.Id == idBand select p;
-            //var album = albumDetais.First().Where(a => a.Id == idAlbum);
-
-            var album = new Album();
-            foreach (var item in albumDetais)
-            {
-                if (item[0].Id == idAlbum)
+                foreach(AlbumViewModel[] item in banda.AlbumList)
                 {
-                    album = item[0];
-                    break;
+                    foreach(var alb in item)
+                    {
+                        if(alb.Id == id)
+                        {
+                            album = alb;
+                            break;
+                        }
+                    }
+
+                    if (album != null) break;
                 }
+                if (album != null) break;
             }
 
-            List<Track> listaTrack = new List<Track>();
-
-            if (string.IsNullOrEmpty(album.Id) == false)
-            {
-                listaTrack = album.Tracks.ToList<Track>();
-            }
-
-            var viewModel = Mapper.Map<List<Track>, List<TrackViewModel>>(listaTrack);
-
-            return View(viewModel);
+            return View(album.Tracks);
         }
     }
 }

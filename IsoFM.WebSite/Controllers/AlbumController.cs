@@ -32,20 +32,19 @@ namespace IsoFM.WebSite.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var bandFull = _bandRepository.ObterFull();
+            if(Discografia.BandCollection == null)
+                Discografia.BandCollection = Mapper.Map<List<Domain.Band>, List<BandViewModel>>(_bandRepository.ObterFull());
 
-            var albumDetais = bandFull.Where(b => b.Id == idBand).FirstOrDefault().AlbumList;
+            var albumDetais = Discografia.BandCollection.Where(b => b.Id == idBand).FirstOrDefault().AlbumList;
 
-            List<Album> listaAlbum = new List<Album>();
+            List<AlbumViewModel> listaAlbum = new List<AlbumViewModel>();
 
             foreach (var item in albumDetais)
             {
                 listaAlbum.Add(item.FirstOrDefault());
             }
 
-            var viewModel = Mapper.Map<List<Album>, List<AlbumViewModel>>(listaAlbum);
-
-            return PartialView(viewModel);
+            return PartialView(listaAlbum);
         }
 
     }
